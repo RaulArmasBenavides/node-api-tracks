@@ -60,8 +60,15 @@ const crearUsuario = async(req, res) => {
             name,
             password: passwordHash
         })
+        // // Guardar usuario
+        // await registerUser.save();
+        // res.json({
+        //     ok: true,
+        //     registerUser
+        // });
 
         res.send({ data: registerUser })
+
     } catch (e) {
         httpError(res, e)
     }

@@ -1,5 +1,5 @@
 const { httpError } = require('../helpers/handleError')
-const userModel = require('../models/users')
+const trackModel = require('../models/track')
 const PORT = process.env.PORT || 3000
 const URL_PUBLIC = process.env.URL_PUBLIC || '/'
 const getItems = async(req, res) => {
@@ -145,42 +145,50 @@ const getItem = (req, res) => {
 
 const createItem = async(req, res) => {
     try {
-        const { name, age, email } = req.body
-        const resDetail = await userModel.create({
-            name,
-            age,
-            email
-        })
-        res.send({ data: resDetail })
+          // Obtener los datos enviados en la solicitud
+    const trackData = req.body;
+    const uid = req.uid;
+    // Crear una nueva instancia del modelo 'Track' con los datos recibidos
+    const newTrack = new trackModel(trackData);
+
+    // Guardar el nuevo track en la base de datos
+    const savedTrack = await newTrack.save();
+
+    res.status(201).json({
+      ok: true,
+      message: 'Track creado exitosamente',
+      track: savedTrack,
+    });
+        // const { name, age, email } = req.body
+        // const resDetail = await trackModel.create({
+        //     name,
+        //     age,
+        //     email
+        // })
+        // res.send({ data: resDetail })
     } catch (e) {
         httpError(res, e)
     }
 }
-
-
 const updateItem = async(req, res = response) => {
     const id = req.params.id;
     try {
-        
-        const itemToUpdate = await userModel.findById(id);
-
+        const itemToUpdate = await trackModel.findById(id);
         if ( !itemToUpdate ) {
             return res.status(404).json({
                 ok: true,
                 msg: 'Canción no encontrado por id',
             });
         }
-
         const cambiosHospital = {
             ...req.body,
             usuario: uid
         }
-        const trackUpdated = await userModel.findByIdAndUpdate( id, cambiosHospital, { new: true } );
+        const trackUpdated = await trackModel.findByIdAndUpdate( id, cambiosHospital, { new: true } );
         res.json({
             ok: true,
             hospital: trackUpdated
         })
-
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -188,35 +196,26 @@ const updateItem = async(req, res = response) => {
             msg: 'Hable con el administrador'
         })
     }
-
 }
 
 const deleteItem = async(req, res = response) => {
     const id  = req.params.id;
-
     try {
-        
-        const hospital = await userModel.findById( id );
-
+        const hospital = await trackModel.findById( id );
         if ( !hospital ) {
             return res.status(404).json({
                 ok: true,
                 msg: 'Hospital no encontrado por id',
             });
         }
-
         await userModel.findByIdAndDelete( id );
-
-
         res.json({
             ok: true,
             msg: 'Hospital eliminado'
         });
 
     } catch (error) {
-
-        console.log(error);
-
+        console.log(error)
         res.status(500).json({
             ok: false,
             msg: 'Hable con el administrador'
