@@ -9,9 +9,9 @@ const dbConnect = () => {
         useCreateIndex: true
     }, (err, res) => {
         if (!err) {
-            console.log('**** CONEXION CORRECTA ****')
+            console.log('**** CONEXION CORRECTA MONGO DB****')
         } else {
-            console.log('***** ERROR DE CONEXION ****')
+            console.log('***** ERROR DE CONEXION  BASE DE DATOS MONGOD DB****')
         }
     })
 }
