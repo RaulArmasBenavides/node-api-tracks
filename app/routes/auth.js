@@ -1,10 +1,25 @@
 const express = require('express')
 const router = express.Router()
+const { check } = require('express-validator');
+const { login, crearUsuario ,googleSignIn} = require('../controlles/auth');
+const { validarCampos } = require('../middleware/validar-campos');
 
-const { loginCtrl, crearUsuario } = require('../controlles/auth')
+router.post('/login', login)
+router.post( '/register',
+    [
+        check('email', 'El email es obligatorio').isEmail(),
+        check('password', 'El password es obligatorio').not().isEmpty(),
+        validarCampos
+    ],
+    crearUsuario
+);
 
-router.post('/login', loginCtrl)
-router.post('/register', crearUsuario)
-
+router.post( '/google',
+    [
+        check('token', 'El token de Google es obligatorio').not().isEmpty(),
+        // validarCampos
+    ],
+    googleSignIn
+)
 
 module.exports = router

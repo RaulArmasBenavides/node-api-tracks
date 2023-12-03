@@ -13,6 +13,24 @@ const tokenSign = async (user) => { //TODO: Genera Token
     );
 }
 
+const generarJWT = ( uid ) => {
+    return new Promise( ( resolve, reject ) => {
+        const payload = {
+            uid,
+        };
+        jwt.sign( payload, process.env.JWT_SECRET, {
+            expiresIn: '12h'
+        }, ( err, token ) => {
+            if ( err ) {
+                console.log(err);
+                reject('No se pudo generar el JWT');
+            } else {
+                resolve( token );
+            }
+        });
+    });
+}
+
 const verifyToken = async (token) => {
     try {
         return jwt.verify(token, process.env.JWT_SECRET)
@@ -27,4 +45,4 @@ const decodeSign = (token) => { //TODO: Verificar que el token sea valido y corr
 
 
 
-module.exports = { tokenSign, decodeSign, verifyToken }
+module.exports = { tokenSign, decodeSign, verifyToken,generarJWT }

@@ -12,7 +12,6 @@ const checkOrigin = (req, res, next) => {
     } catch (e) {
         next()
     }
-
 }
 
 module.exports = checkOrigin
