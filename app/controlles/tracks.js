@@ -2,6 +2,8 @@ const { httpError } = require('../helpers/handleError')
 const trackModel = require('../models/track')
 const PORT = process.env.PORT || 3000
 const URL_PUBLIC = process.env.URL_PUBLIC || '/'
+
+
 const getItems = async(req, res) => {
     try {
         const listAll = [{
@@ -139,13 +141,25 @@ const getItems = async(req, res) => {
     }
 }
 
+const getItemsFromDB = async(req, res = response) => {
+
+    const tracks = await trackModel.find();
+                                  //  .populate('usuario','nombre img');
+
+    res.json({
+        ok: true,
+        data: tracks
+    })
+}
+
+
 const getItem = (req, res) => {
 
 }
 
 const createItem = async(req, res) => {
     try {
-          // Obtener los datos enviados en la solicitud
+    // Obtener los datos enviados en la solicitud
     const trackData = req.body;
     const uid = req.uid;
     // Crear una nueva instancia del modelo 'Track' con los datos recibidos
@@ -223,4 +237,4 @@ const deleteItem = async(req, res = response) => {
     }
 }
 
-module.exports = { getItem, getItems, deleteItem, createItem, updateItem }
+module.exports = { getItem, getItems , getItemsFromDB, deleteItem, createItem, updateItem }

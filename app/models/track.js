@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
 
-const TrackSchema  = new mongoose.Schema({
-
+const TrackSchema  = Schema({
     // _id: {
-    //     type: Number
+    //      type: Number
     // },
     name: {
         type: String
@@ -37,9 +36,11 @@ const TrackSchema  = new mongoose.Schema({
         type: String
     },
     });
-    // TrackSchema.method('toJSON', function() {
-    //     const { __v, _id, password, ...object } = this.toObject();
-    //     object.uid = _id;
-    //     return object;
-    // })
+
+
+   TrackSchema.method('toJSON', function() {
+     const { __v, _id, password, ...object } = this.toObject();
+     object.uid = _id;
+     return object;
+   })
 module.exports = mongoose.model('tracks', TrackSchema);
