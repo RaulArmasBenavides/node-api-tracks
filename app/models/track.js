@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-
-const TrackSchema  = Schema({
+ 
+const TrackSchema  = mongoose.Schema({
     // _id: {
     //      type: Number
     // },
