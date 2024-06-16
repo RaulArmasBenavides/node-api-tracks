@@ -1,19 +1,13 @@
 const mongoose = require('mongoose')
 
-const dbConnect = () => {
+const dbConnect = async() => {
     console.log("conectando a mongo")
     const DB_URI = process.env.DB_CNN
-    mongoose.connect(DB_URI, {
-        useNewUrlParser: true,
+    await mongoose.connect( process.env.DB_CNN2 , {
+        useNewUrlParser: true, 
         useUnifiedTopology: true,
-        useCreateIndex: true
-    }, (err, res) => {
-        if (!err) {
-            console.log('**** CONEXION CORRECTA MONGO DB****')
-        } else {
-            console.log('***** ERROR DE CONEXION  BASE DE DATOS MONGOD DB****')
-        }
-    })
+        // useCreateIndex: true
+    });
 }
 
 module.exports = { dbConnect }
