@@ -44,6 +44,7 @@ const loginCtrl = async(req, res) => {
 const login = async( req, res = response ) => {
 
     const { email, password } = req.body;
+    console.log(email);
     try {
         console.log(email,password);
         const usuarioDB = await userModel.findOne({ email });
@@ -53,7 +54,9 @@ const login = async( req, res = response ) => {
                 msg: 'Email no encontrado'
             });
         }
-        const validPassword = compare(password,usuarioDB.password); 
+        console.log(usuarioDB)
+        const validPassword = await compare(password,usuarioDB.password); 
+        console.log(validPassword);
         if ( !validPassword ) {
             return res.status(400).json({
                 ok: false,

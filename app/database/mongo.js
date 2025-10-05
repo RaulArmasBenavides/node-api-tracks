@@ -1,13 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const dbConnect = async() => {
-    console.log("conectando a mongo")
-    const DB_URI = process.env.DB_CNN
-    await mongoose.connect( process.env.DB_CNN2 , {
-        useNewUrlParser: true, 
-        useUnifiedTopology: true,
-        // useCreateIndex: true
-    });
-}
+const dbConnect = async () => {
+  console.log("conectando a mongo");
+  await mongoose.connect(process.env.DB_CNN);
+};
 
-module.exports = { dbConnect }
+module.exports = { dbConnect };
