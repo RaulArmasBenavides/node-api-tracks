@@ -67,7 +67,7 @@ const login = async (req, res) => {
             ok: true,
             token,
             usuarioDB,
-            menu: (0, menu_frontend_1.getMenuFrontEnd)(usuarioDB.role),
+            menu: (0, menu_frontend_1.getMenuFrontEnd)('USER_ROLE'),
         });
     }
     catch (error) {
@@ -137,7 +137,7 @@ const googleSignIn = async (req, res) => {
             ok: true,
             token,
             usuarioDB: usuarioDB ?? usuario,
-            menu: (0, menu_frontend_1.getMenuFrontEnd)(usuario.role),
+            menu: (0, menu_frontend_1.getMenuFrontEnd)('USER_ROLE'),
         });
     }
     catch (error) {

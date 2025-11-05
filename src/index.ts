@@ -5,8 +5,8 @@ import cors from "cors";
 import path from "path";
 
  
-import { swaggerDocs as V1SwaggerDocs } from "./src/swagger";
-import routes from "./src/routes";
+import { swaggerDocs as V1SwaggerDocs } from "./swagger";
+import routes from "./routes";
 
 const app = express();
 

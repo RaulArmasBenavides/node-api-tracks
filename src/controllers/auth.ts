@@ -100,7 +100,7 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
       ok: true,
       token,
       usuarioDB,
-      menu: getMenuFrontEnd(usuarioDB.role),
+      menu: getMenuFrontEnd('USER_ROLE'),
     });
   } catch (error) {
     console.error(error);
@@ -177,7 +177,7 @@ export const googleSignIn = async (req: Request<{}, {}, GoogleSignInBody>, res: 
       ok: true,
       token,
       usuarioDB: usuarioDB ?? usuario,
-      menu: getMenuFrontEnd(usuario.role),
+      menu: getMenuFrontEnd('USER_ROLE'),
     });
   } catch (error) {
     res.status(401).json({
