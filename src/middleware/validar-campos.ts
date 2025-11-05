@@ -1,6 +1,6 @@
 // src/middleware/validarCampos.ts
-import { Request, Response, NextFunction } from "express";
-import { validationResult } from "express-validator";
+import { Request, Response, NextFunction } from 'express';
+import { validationResult } from 'express-validator';
 
 export function validarCampos(req: Request, res: Response, next: NextFunction) {
   const errores = validationResult(req);

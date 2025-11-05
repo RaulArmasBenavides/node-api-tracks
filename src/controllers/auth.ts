@@ -1,18 +1,24 @@
 // src/controllers/auth.ts
-import { Request, Response } from "express";
-import { httpError } from "../helpers/handleError";
-import { encrypt, compare } from "../helpers/handleBcrypt";
- 
-import { getMenuFrontEnd } from "../helpers/menu-frontend";
+import { Request, Response } from 'express';
+import { httpError } from '../helpers/handleError';
+import { encrypt, compare } from '../helpers/handleBcrypt';
+
+import { getMenuFrontEnd } from '../helpers/menu-frontend';
 // Ajusta este import a la ruta real donde tengas la verificación de Google
 
-import userModel from "../models/users"; // requiere esModuleInterop=true
-import googleVerify from "../helpers/google-verify";
-import { generarJWT, tokenSign } from "../helpers/generateToken";
+import userModel from '../models/users'; // requiere esModuleInterop=true
+import googleVerify from '../helpers/google-verify';
+import { generarJWT, tokenSign } from '../helpers/generateToken';
 
 // === Tipos locales ===
 type LoginBody = { email: string; password: string };
-type CreateUserBody = { email: string; password: string; name: string; age?: number; role?: string };
+type CreateUserBody = {
+  email: string;
+  password: string;
+  name: string;
+  age?: number;
+  role?: string;
+};
 type GoogleSignInBody = { token: string };
 
 type UserJwtPayload = {
@@ -37,19 +43,22 @@ type UserDoc = {
 // === Controladores ===
 
 // Demo/mock login (mantiene tu lógica original con mock)
-export const loginCtrl = async (req: Request<{}, {}, LoginBody>, res: Response) => {
+export const loginCtrl = async (
+  req: Request<{}, {}, LoginBody>,
+  res: Response,
+) => {
   try {
     const mockUser = {
-      name: "Leifer",
-      email: "test@test.com",
-      password: "12345678",
-      avatar: "https://i.imgur.com/0mZ4PUR.png",
+      name: 'Leifer',
+      email: 'test@test.com',
+      password: '12345678',
+      avatar: 'https://i.imgur.com/0mZ4PUR.png',
     };
 
     const { email, password } = req.body;
 
     if (mockUser.email !== email) {
-      res.status(404).send({ error: "User not found" });
+      res.status(404).send({ error: 'User not found' });
       return;
     }
 
@@ -66,7 +75,7 @@ export const loginCtrl = async (req: Request<{}, {}, LoginBody>, res: Response) 
       return;
     }
 
-    res.status(409).send({ error: "Invalid password" });
+    res.status(409).send({ error: 'Invalid password' });
   } catch (e) {
     httpError(res, e);
   }
@@ -81,7 +90,7 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
     if (!usuarioDB) {
       return res.status(404).json({
         ok: false,
-        msg: "Email no encontrado",
+        msg: 'Email no encontrado',
       });
     }
 
@@ -89,7 +98,7 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
     if (!validPassword) {
       return res.status(400).json({
         ok: false,
-        msg: "Contraseña no válida",
+        msg: 'Contraseña no válida',
       });
     }
 
@@ -106,13 +115,16 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
     console.error(error);
     return res.status(500).json({
       ok: false,
-      msg: "Hable con el administrador",
+      msg: 'Hable con el administrador',
     });
   }
 };
 
 // Crear usuario
-export const crearUsuario = async (req: Request<{}, {}, CreateUserBody>, res: Response) => {
+export const crearUsuario = async (
+  req: Request<{}, {}, CreateUserBody>,
+  res: Response,
+) => {
   try {
     const { email, password, name, age, role } = req.body;
 
@@ -120,7 +132,7 @@ export const crearUsuario = async (req: Request<{}, {}, CreateUserBody>, res: Re
     if (existeEmail) {
       return res.status(400).json({
         ok: false,
-        msg: "El correo ya está registrado",
+        msg: 'El correo ya está registrado',
       });
     }
 
@@ -141,7 +153,10 @@ export const crearUsuario = async (req: Request<{}, {}, CreateUserBody>, res: Re
 };
 
 // Login con Google
-export const googleSignIn = async (req: Request<{}, {}, GoogleSignInBody>, res: Response) => {
+export const googleSignIn = async (
+  req: Request<{}, {}, GoogleSignInBody>,
+  res: Response,
+) => {
   const { token: googleToken } = req.body;
 
   try {
@@ -155,7 +170,7 @@ export const googleSignIn = async (req: Request<{}, {}, GoogleSignInBody>, res: 
       usuario = new userModel({
         nombre: name,
         email,
-        password: "@@@",
+        password: '@@@',
         img: picture,
         google: true,
       }) as any;
@@ -166,7 +181,7 @@ export const googleSignIn = async (req: Request<{}, {}, GoogleSignInBody>, res: 
     }
 
     // Guardar en DB
-    if (typeof usuario.save === "function") {
+    if (typeof usuario.save === 'function') {
       await usuario.save();
     }
 
@@ -182,7 +197,7 @@ export const googleSignIn = async (req: Request<{}, {}, GoogleSignInBody>, res: 
   } catch (error) {
     res.status(401).json({
       ok: false,
-      msg: "Token no es correcto",
+      msg: 'Token no es correcto',
     });
   }
 };

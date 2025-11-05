@@ -1,20 +1,23 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export async function dbConnect(): Promise<void> {
   const uri = process.env.DB_CNN;
   if (!uri) {
-    throw new Error("Missing DB_CNN environment variable");
+    throw new Error('Missing DB_CNN environment variable');
   }
 
   // Evita warnings con queries no estrictas
-  mongoose.set("strictQuery", true);
+  mongoose.set('strictQuery', true);
 
   // No reconectar si ya está conectando/conectado
-  if (mongoose.connection.readyState === 1 || mongoose.connection.readyState === 2) {
+  if (
+    mongoose.connection.readyState === 1 ||
+    mongoose.connection.readyState === 2
+  ) {
     return;
   }
 
-  console.log("[db] Conectando a Mongo...");
+  console.log('[db] Conectando a Mongo...');
   await mongoose.connect(uri);
-  console.log("[db] Mongo conectado");
+  console.log('[db] Mongo conectado');
 }
