@@ -11,13 +11,27 @@ const UserSchema = new mongoose_1.Schema({
     age: { type: Number },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, default: "user" },
+    role: {
+        type: String,
+        enum: ['USER_ROLE', 'ADMIN_ROLE'],
+        default: 'USER_ROLE',
+        required: true,
+    },
+    img: {
+        type: String,
+    },
+    google: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
 }, {
     timestamps: true,
     versionKey: false,
+    collection: 'users', // opcional: asegura el nombre de colección
 });
 /**
  * Exporta el modelo de usuario
  */
-exports.UserModel = (0, mongoose_1.model)("users", UserSchema);
+exports.UserModel = (0, mongoose_1.model)('users', UserSchema);
 exports.default = exports.UserModel;

@@ -7,14 +7,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const path_1 = __importDefault(require("path"));
+const node_path_1 = __importDefault(require("node:path"));
+const morgan_1 = __importDefault(require("morgan"));
 const swagger_1 = require("./swagger");
 const routes_1 = __importDefault(require("./routes"));
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT ?? 3000);
 app.use((0, cors_1.default)());
+app.use((0, morgan_1.default)('tiny'));
 app.use(express_1.default.json());
-app.use(express_1.default.static(path_1.default.resolve("public")));
+app.use(express_1.default.static(node_path_1.default.resolve("public")));
 app.use("/api/v1", routes_1.default);
 // dbConnect();
 app.listen(PORT, () => {

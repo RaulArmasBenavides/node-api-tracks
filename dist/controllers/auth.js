@@ -16,14 +16,14 @@ const generateToken_1 = require("../helpers/generateToken");
 const loginCtrl = async (req, res) => {
     try {
         const mockUser = {
-            name: "Leifer",
-            email: "test@test.com",
-            password: "12345678",
-            avatar: "https://i.imgur.com/0mZ4PUR.png",
+            name: 'Leifer',
+            email: 'test@test.com',
+            password: '12345678',
+            avatar: 'https://i.imgur.com/0mZ4PUR.png',
         };
         const { email, password } = req.body;
         if (mockUser.email !== email) {
-            res.status(404).send({ error: "User not found" });
+            res.status(404).send({ error: 'User not found' });
             return;
         }
         const checkPassword = mockUser.password === password;
@@ -36,7 +36,7 @@ const loginCtrl = async (req, res) => {
             });
             return;
         }
-        res.status(409).send({ error: "Invalid password" });
+        res.status(409).send({ error: 'Invalid password' });
     }
     catch (e) {
         (0, handleError_1.httpError)(res, e);
@@ -51,14 +51,14 @@ const login = async (req, res) => {
         if (!usuarioDB) {
             return res.status(404).json({
                 ok: false,
-                msg: "Email no encontrado",
+                msg: 'Email no encontrado',
             });
         }
         const validPassword = await (0, handleBcrypt_1.compare)(password, usuarioDB.password);
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: "Contraseña no válida",
+                msg: 'Contraseña no válida',
             });
         }
         // Generar el TOKEN - JWT
@@ -74,7 +74,7 @@ const login = async (req, res) => {
         console.error(error);
         return res.status(500).json({
             ok: false,
-            msg: "Hable con el administrador",
+            msg: 'Hable con el administrador',
         });
     }
 };
@@ -87,7 +87,7 @@ const crearUsuario = async (req, res) => {
         if (existeEmail) {
             return res.status(400).json({
                 ok: false,
-                msg: "El correo ya está registrado",
+                msg: 'El correo ya está registrado',
             });
         }
         const passwordHash = await (0, handleBcrypt_1.encrypt)(password);
@@ -117,7 +117,7 @@ const googleSignIn = async (req, res) => {
             usuario = new users_1.default({
                 nombre: name,
                 email,
-                password: "@@@",
+                password: '@@@',
                 img: picture,
                 google: true,
             });
@@ -128,7 +128,7 @@ const googleSignIn = async (req, res) => {
             usuario.google = true;
         }
         // Guardar en DB
-        if (typeof usuario.save === "function") {
+        if (typeof usuario.save === 'function') {
             await usuario.save();
         }
         // Generar el TOKEN - JWT
@@ -143,7 +143,7 @@ const googleSignIn = async (req, res) => {
     catch (error) {
         res.status(401).json({
             ok: false,
-            msg: "Token no es correcto",
+            msg: 'Token no es correcto',
         });
     }
 };

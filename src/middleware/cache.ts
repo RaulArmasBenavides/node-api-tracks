@@ -1,22 +1,17 @@
-// src/middleware/cache.ts
-import type { RequestHandler } from "express";
-import getExpeditious from "express-expeditious";
+// src/middlewares/cache.ts
+import getExpeditiousCache, { ExpeditiousOptions } from 'express-expeditious';
 
-type ExpeditiousOptions = {
-  namespace?: string;
-  defaultTtl?: string | number;
-  statusCodeExpires?: Record<number, string | number>;
-};
-
+// ⚙️ Configuración por defecto del caché
 const defaultOptions: ExpeditiousOptions = {
-  namespace: "expresscache",
-  defaultTtl: "15 minute", // también puede ser número en ms
+  namespace: 'expresscache',
+  defaultTtl: '15 minutes', // También puedes usar: 15 * 60 * 1000
   statusCodeExpires: {
-    404: "5 minutes",
-    500: 0, // sin cache
+    404: '5 minutes',
+    500: 0, // No cachea errores de servidor
   },
 };
 
-// export const cacheInit = getExpeditious(defaultOptions) as unknown as RequestHandler;
+// 🧩 Inicializa el middleware de caché
+export const cacheInit = getExpeditiousCache(defaultOptions);
 
-// export default cacheInit;
+export default { cacheInit };

@@ -1,5 +1,6 @@
 // src/models/users.ts
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document } from 'mongoose';
+export type UserRole = "USER_ROLE" | "ADMIN_ROLE";
 
 /**
  * Interface TypeScript para tipar el documento de usuario
@@ -9,7 +10,9 @@ export interface IUser extends Document {
   age?: number;
   email: string;
   password: string;
-  role: string;
+  img?: string;
+  role: UserRole;
+  google: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -23,17 +26,31 @@ const UserSchema = new Schema<IUser>(
     age: { type: Number },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, default: "user" },
+    role: {
+      type: String,
+      enum: ['USER_ROLE', 'ADMIN_ROLE'],
+      default: 'USER_ROLE',
+      required: true,
+    },
+    img: {
+      type: String,
+    },
+    google: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
+    collection: 'users', // opcional: asegura el nombre de colección
+  },
 );
 
 /**
  * Exporta el modelo de usuario
  */
-export const UserModel = model<IUser>("users", UserSchema);
+export const UserModel = model<IUser>('users', UserSchema);
 
 export default UserModel;

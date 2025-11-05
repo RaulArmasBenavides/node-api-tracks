@@ -3,7 +3,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import path from "node:path";
-
+import morgan from 'morgan';
 
  
 import { swaggerDocs as V1SwaggerDocs } from "./swagger";
