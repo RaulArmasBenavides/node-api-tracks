@@ -2,7 +2,8 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import path from "path";
+import path from "node:path";
+
 
  
 import { swaggerDocs as V1SwaggerDocs } from "./swagger";
@@ -13,6 +14,7 @@ const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
 
 app.use(cors());
+app.use(morgan('tiny'));  
 app.use(express.json());
 app.use(express.static(path.resolve("public")));
 
