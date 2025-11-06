@@ -1,6 +1,6 @@
 // src/app/swagger.ts
 import type { Express } from "express";
-import path from "path";
+import path from "node:path";
 import swaggerJSDoc, { type Options } from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
 

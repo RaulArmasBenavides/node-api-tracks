@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.swaggerDocs = swaggerDocs;
-const path_1 = __importDefault(require("path"));
+const node_path_1 = __importDefault(require("node:path"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 // --- Metadata de la API ---
@@ -16,11 +16,11 @@ const options = {
     // Incluye rutas tanto en src (.ts) como en dist (.js) para dev y prod
     apis: [
         // Dev (TS)
-        path_1.default.resolve("src/app/routes/*.ts"),
-        path_1.default.resolve("src/app/database/*.ts"),
+        node_path_1.default.resolve("src/app/routes/*.ts"),
+        node_path_1.default.resolve("src/app/database/*.ts"),
         // Prod (JS compilado)
-        path_1.default.resolve("dist/app/routes/*.js"),
-        path_1.default.resolve("dist/app/database/*.js"),
+        node_path_1.default.resolve("dist/app/routes/*.js"),
+        node_path_1.default.resolve("dist/app/database/*.js"),
     ],
 };
 // Docs en JSON

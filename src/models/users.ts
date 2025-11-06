@@ -1,6 +1,6 @@
 // src/models/users.ts
 import { Schema, model, Document } from 'mongoose';
-export type UserRole = "USER_ROLE" | "ADMIN_ROLE";
+export type UserRole = 'USER_ROLE' | 'ADMIN_ROLE';
 
 /**
  * Interface TypeScript para tipar el documento de usuario
@@ -30,15 +30,16 @@ const UserSchema = new Schema<IUser>(
       type: String,
       enum: ['USER_ROLE', 'ADMIN_ROLE'],
       default: 'USER_ROLE',
-      required: true,
+      required: false,
     },
     img: {
       type: String,
+      required: false,
     },
     google: {
       type: Boolean,
       default: false,
-      required: true,
+      required: false,
     },
   },
   {

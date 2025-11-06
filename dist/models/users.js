@@ -15,15 +15,16 @@ const UserSchema = new mongoose_1.Schema({
         type: String,
         enum: ['USER_ROLE', 'ADMIN_ROLE'],
         default: 'USER_ROLE',
-        required: true,
+        required: false,
     },
     img: {
         type: String,
+        required: false,
     },
     google: {
         type: Boolean,
         default: false,
-        required: true,
+        required: false,
     },
 }, {
     timestamps: true,

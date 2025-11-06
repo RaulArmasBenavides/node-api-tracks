@@ -8,6 +8,7 @@ import morgan from 'morgan';
  
 import { swaggerDocs as V1SwaggerDocs } from "./swagger";
 import routes from "./routes";
+import { dbConnect } from "./database/mongo";
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(express.static(path.resolve("public")));
 
 app.use("/api/v1", routes);
 
-// dbConnect();
+dbConnect();
 
 app.listen(PORT, () => {
   console.log(`Tu API es http://localhost:${PORT}/api/v1`);
