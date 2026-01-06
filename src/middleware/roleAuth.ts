@@ -1,15 +1,11 @@
 // src/middleware/checkRoleAuth.ts
 import { Request, Response, NextFunction, RequestHandler } from "express";
  
-import UserModel, { type IUser } from "../models/users";
+import UserModel from "../models/users";
 import { verifyToken } from "../helpers/generateToken";
+import { JwtPayload } from "../types/jwt.type";
+import { IUser } from "../interfaces/user.interface";
 
-type JwtPayload = {
-  _id?: string;   // según tu generateToken puede ser _id
-  id?: string;    // o id
-  role?: string;
-  [k: string]: unknown;
-};
 
 export function checkRoleAuth(roles: string[] | string): RequestHandler {
   const allowed = Array.isArray(roles) ? roles : [roles];
