@@ -1,10 +1,11 @@
 // src/middleware/checkRoleAuth.ts
 import { Request, Response, NextFunction, RequestHandler } from "express";
  
-import UserModel from "../models/users";
-import { verifyToken } from "../helpers/generateToken";
-import { JwtPayload } from "../types/jwt.type";
-import { IUser } from "../interfaces/user.interface";
+import UserModel from "../../models/users.model";
+import { verifyToken } from "../../helpers/generateToken";
+// import { JwtPayload } from "../types/jwt.type";
+import { IUser } from "../../infrastructure/data/models/user.interface";
+import { JwtPayload } from "jsonwebtoken";
 
 
 export function checkRoleAuth(roles: string[] | string): RequestHandler {

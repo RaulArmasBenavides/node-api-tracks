@@ -1,6 +1,6 @@
 // src/models/users.ts
-import { Schema, model, Document } from 'mongoose';
-import { IUser } from '../interfaces/user.interface';
+import { Schema, model } from 'mongoose';
+import { IUser } from '../infrastructure/data/models/user.interface';
 export type UserRole = 'USER_ROLE' | 'ADMIN_ROLE';
 
 /**

@@ -1,6 +1,6 @@
 // src/models/tracks.ts
-import { Schema, model, Document } from "mongoose";
-import { ITrack } from "../interfaces/tracks.interface";
+import { Schema, model } from "mongoose";
+import { ITrack } from "../infrastructure/data/models/tracks.interface";
 
 
 const TrackSchema = new Schema<ITrack>(

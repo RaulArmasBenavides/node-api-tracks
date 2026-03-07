@@ -1,6 +1,6 @@
 // src/models/categories.ts
-import { Schema, model, Document } from "mongoose";
-import { ICategory } from "../interfaces/category.interface";
+import { Schema, model } from "mongoose";
+import { ICategory } from "../infrastructure/data/models/category.interface";
 
 
 

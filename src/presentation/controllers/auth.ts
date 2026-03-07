@@ -1,14 +1,14 @@
 // src/controllers/auth.ts
 import { Request, Response } from 'express';
-import { httpError } from '../helpers/handleError';
-import { encrypt, compare } from '../helpers/handleBcrypt';
+import { httpError } from '../../helpers/handleError';
+import { encrypt, compare } from '../../helpers/handleBcrypt';
 
-import { getMenuFrontEnd } from '../helpers/menu-frontend';
+import { getMenuFrontEnd } from '../../helpers/menu-frontend';
 // Ajusta este import a la ruta real donde tengas la verificación de Google
 
-import userModel from '../models/users'; // requiere esModuleInterop=true
-import googleVerify from '../helpers/google-verify';
-import { generarJWT, tokenSign } from '../helpers/generateToken';
+import userModel from '../../models/users.model'; // requiere esModuleInterop=true
+import googleVerify from '../../helpers/google-verify';
+import { generarJWT, tokenSign } from '../../helpers/generateToken';
 
 // === Tipos locales ===
 type LoginBody = { email: string; password: string };

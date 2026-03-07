@@ -1,7 +1,7 @@
 // src/middleware/checkAuth.ts
 import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { verifyToken } from "../helpers/generateToken";
+import { verifyToken } from "../../helpers/generateToken";
 
 // Ajusta este tipo al payload real que emites en tu JWT
  

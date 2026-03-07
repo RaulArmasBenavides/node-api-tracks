@@ -1,30 +1,28 @@
 // src/index.ts
-import "dotenv/config";
-import express from "express";
-import cors from "cors";
-import path from "node:path";
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import path from 'node:path';
 import morgan from 'morgan';
 
- 
-import { swaggerDocs as V1SwaggerDocs } from "./swagger";
-import routes from "./routes";
-import { dbConnect } from "./database/mongo";
+import { swaggerDocs as V1SwaggerDocs } from './swagger';
+import routes from './presentation/routes';
+import { dbConnect } from './infrastructure/data/database/mongo';
 
 const app = express();
 
 const PORT = Number(process.env.PORT ?? 3000);
 
 app.use(cors());
-app.use(morgan('tiny'));  
+app.use(morgan('tiny'));
 app.use(express.json());
-app.use(express.static(path.resolve("public")));
+app.use(express.static(path.resolve('public')));
 
-app.use("/api/v1", routes);
-
+app.use('/api/v1', routes);
+V1SwaggerDocs(app, PORT);
 dbConnect();
 
 app.listen(PORT, () => {
   console.log(`Tu API es http://localhost:${PORT}/api/v1`);
   console.log(`Version 1 Docs: http://localhost:${PORT}/api/v1/docs`);
-  V1SwaggerDocs(app, PORT);
 });

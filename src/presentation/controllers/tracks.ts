@@ -1,8 +1,8 @@
 // src/controllers/tracks.ts
 import { Request, Response } from 'express';
-import { httpError } from '../helpers/handleError';
-import { ITrack } from '../interfaces/tracks.interface';
-import TrackModel from '../models/track';
+import { httpError } from '../../helpers/handleError';
+import { ITrack } from '../../infrastructure/data/models/tracks.interface';
+import TrackModel from '../../models/track.model';
  
 // Si ya tienes una augmentación global para Request, elimina esto:
 declare module 'express-serve-static-core' {

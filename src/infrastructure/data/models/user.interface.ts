@@ -1,4 +1,4 @@
-import { UserRole } from '../models/users';
+import { UserRole } from '../../../models/users.model';
 
 /**
  * Interface TypeScript para tipar el documento de usuario
