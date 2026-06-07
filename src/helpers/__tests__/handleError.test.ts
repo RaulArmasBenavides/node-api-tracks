@@ -7,9 +7,9 @@ describe('handleError', () => {
 
   beforeEach(() => {
     mockResponse = {
-      status: jest.fn().returnThis(),
-      json: jest.fn().returnThis(),
-    };
+      status: jest.fn(function() { return this; }),
+      json: jest.fn(function() { return this; }),
+    } as any;
     consoleSpy = jest.spyOn(console, 'error').mockImplementation();
   });
 
