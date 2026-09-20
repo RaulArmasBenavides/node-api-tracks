@@ -127,8 +127,12 @@ export const getItems = async (_req: Request, res: Response) => {
  * Devuelve tracks desde la DB
  */
 export const getItemsFromDB = async (_req: Request, res: Response) => {
-  const tracks = await TrackModel.find();
-  res.json({ ok: true, data: tracks });
+  try {
+    const tracks = await TrackModel.find();
+    res.json({ ok: true, data: tracks });
+  } catch (e) {
+    httpError(res, e);
+  }
 };
 
 /**
@@ -146,9 +150,7 @@ export const getItem = async (req: Request, res: Response) => {
     }
     return res.json({ ok: true, data: track });
   } catch (e) {
-    return res
-      .status(500)
-      .json({ ok: false, msg: 'Hable con el administrador' });
+    httpError(res, e);
   }
 };
 
@@ -201,11 +203,8 @@ export const updateItem = async (
       new: true,
     });
     return res.json({ ok: true, track: trackUpdated });
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ ok: false, msg: 'Hable con el administrador' });
+  } catch (e) {
+    httpError(res, e);
   }
 };
 
@@ -227,11 +226,8 @@ export const deleteItem = async (
 
     await TrackModel.findByIdAndDelete(id);
     return res.json({ ok: true, msg: 'Track eliminado' });
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ ok: false, msg: 'Hable con el administrador' });
+  } catch (e) {
+    httpError(res, e);
   }
 };
 

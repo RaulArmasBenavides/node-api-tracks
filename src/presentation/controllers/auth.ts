@@ -42,46 +42,7 @@ type UserDoc = {
 
 // === Controladores ===
 
-// Demo/mock login (mantiene tu lógica original con mock)
-export const loginCtrl = async (
-  req: Request<{}, {}, LoginBody>,
-  res: Response,
-) => {
-  try {
-    const mockUser = {
-      name: 'Leifer',
-      email: 'test@test.com',
-      password: '12345678',
-      avatar: 'https://i.imgur.com/0mZ4PUR.png',
-    };
-
-    const { email, password } = req.body;
-
-    if (mockUser.email !== email) {
-      res.status(404).send({ error: 'User not found' });
-      return;
-    }
-
-    const checkPassword = mockUser.password === password;
-
-    // JWT
-    const tokenSession = await tokenSign(mockUser as any);
-
-    if (checkPassword) {
-      res.send({
-        data: mockUser,
-        tokenSession,
-      });
-      return;
-    }
-
-    res.status(409).send({ error: 'Invalid password' });
-  } catch (e) {
-    httpError(res, e);
-  }
-};
-
-// Login real contra base de datos
+// Login contra base de datos
 export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
   const { email, password } = req.body;
 
@@ -111,12 +72,8 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
       usuarioDB,
       menu: getMenuFrontEnd('USER_ROLE'),
     });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      ok: false,
-      msg: 'Hable con el administrador',
-    });
+  } catch (e) {
+    httpError(res, e);
   }
 };
 
@@ -202,4 +159,4 @@ export const googleSignIn = async (
   }
 };
 
-export default { loginCtrl, crearUsuario, googleSignIn, login };
+export default { crearUsuario, googleSignIn, login };
