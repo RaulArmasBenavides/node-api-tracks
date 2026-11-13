@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { httpError } from '../../helpers/handleError';
 import { encrypt, compare } from '../../helpers/handleBcrypt';
+import { Uuid } from '../../configs/uuid.adapter';
 
 import { getMenuFrontEnd } from '../../helpers/menu-frontend';
 // Ajusta este import a la ruta real donde tengas la verificación de Google
@@ -83,7 +84,7 @@ export const crearUsuario = async (
   res: Response,
 ) => {
   try {
-    const { email, password, name, age, role } = req.body;
+    const { email, password, name, age } = req.body;
 
     const existeEmail = await userModel.findOne({ email });
     if (existeEmail) {
@@ -95,11 +96,13 @@ export const crearUsuario = async (
 
     const passwordHash = await encrypt(password);
 
+    // El registro público siempre crea USER_ROLE; los admins se crean con `npm run seed:admin`.
     const registerUser = await userModel.create({
+      id: Uuid.v4(),
       email,
       name,
       age,
-      role,
+      role: 'USER_ROLE',
       password: passwordHash,
     });
 
